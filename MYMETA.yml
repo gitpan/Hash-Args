@@ -21,5 +21,6 @@ no_index:
 requires:
   Carp: 0
   Exporter: 0
+  Scalar::Util: 0
   parent: 0
-version: 0.00
+version: 0.01

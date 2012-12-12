@@ -9,6 +9,7 @@ all_from 'lib/Hash/Args.pm';
 requires 'parent';
 requires 'Carp';
 requires 'Exporter';
+requires 'Scalar::Util';
 
 test_requires 'Test::More';
 

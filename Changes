@@ -1,0 +1,5 @@
+Changes from 0.00 to 0.01
+=========================
+
+  * Added object pass-through regardless of the reference type
+  * Updated documentation to reflect new behavior

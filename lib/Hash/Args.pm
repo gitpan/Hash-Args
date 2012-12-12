@@ -3,10 +3,11 @@ package Hash::Args;
 use strict;
 use warnings;
 
-use parent qw( Exporter );
-use Carp   qw( confess );
+use parent       qw( Exporter );
+use Carp         ();
+use Scalar::Util ();
 
-our $VERSION = '0.00';
+our $VERSION = '0.01';
 our @EXPORT  = qw( hash );
 
 
@@ -17,21 +18,26 @@ sub hash {
     my $arg = shift;
     my $ref = ref $arg;
 
-    if( $ref eq 'ARRAY' ) {
-      confess( 'Unable to coerce to HASH reference from ARRAY reference with odd number of elements' )
+    # objects and HASH refs are just pass-throughs
+    if( Scalar::Util::blessed( $arg ) || $ref eq 'HASH' ) {
+      $hash = $arg;
+    }
+
+    # ARRAY refs must be key/value pairs
+    elsif( $ref eq 'ARRAY' ) {
+      Carp::confess( 'Unable to coerce to HASH reference from ARRAY reference with odd number of elements' )
         if @$arg % 2 == 1;
 
       $hash = +{ @$arg };
     }
-    elsif( $ref eq 'HASH' ) {
-      $hash = $arg;
-    }
+
+    # i don't even...
     else {
-      confess( 'Unable to coerce to HASH reference from unknown reference type ('. $ref. ')' )
+      Carp::confess( 'Unable to coerce to HASH reference from unknown reference type ('. $ref. ')' )
     }
   }
   else {
-    confess( 'Unable to coerce to HASH reference from LIST with odd number of elements' )
+    Carp::confess( 'Unable to coerce to HASH reference from LIST with odd number of elements' )
       if @_ % 2 == 1;
 
     $hash = +{ @_ };
@@ -107,9 +113,9 @@ In the first mode of operation a check is made to see what type of
 reference was passed in.  If it is an C<ARRAY> reference, an exception
 is thrown if its length is odd.  Otherwise the array is assumed to
 contain key/value pairs and is coerced into a C<HASH> reference as
-such.  If the reference passed in is a C<HASH> reference, it is
-simply returned as-is.  If the reference passed in is neither of these
-an exception is thrown.
+such.  If the reference passed in is a C<HASH> reference or appears to
+be an object, it is simply returned as-is.  If the reference passed in
+is none of these an exception is thrown.
 
 In the second mode of operation the C<LIST> that was passed in is
 transformed into a C<HASH> reference by treating the list as

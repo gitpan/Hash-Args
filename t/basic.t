@@ -26,6 +26,13 @@ _fail( 'odd array ref', 'ARRAY reference with odd number of elements', [qw( fail
   _fooqux( 'list',      \%args,  %args );
 }
 
+{
+  my $object = bless { }, 'Foo';
+  my $args   = hash( $object );
+
+  ok( "$object" eq "$args", 'object' );
+}
+
 done_testing;
 
 
