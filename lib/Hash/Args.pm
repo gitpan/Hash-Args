@@ -7,7 +7,7 @@ use parent       qw( Exporter );
 use Carp         ();
 use Scalar::Util ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 our @EXPORT  = qw( hash );
 
 
@@ -50,6 +50,8 @@ sub hash {
 1
 __END__
 
+=pod
+
 =head1 NAME
 
 Hash::Args - Coerces argument lists into HASH references for convenience
@@ -90,18 +92,16 @@ Hash::Args - Coerces argument lists into HASH references for convenience
 
 =head1 DESCRIPTION
 
-The primary purpose of C<Hash::Args> is to provide an easy way to
+The primary purpose of Hash::Args is to provide an easy way to
 coerce a list of values into a C<HASH> reference.  It does this in one
 of a few ways.  It can accept a plain C<LIST> of key/value pairs, a
 C<HASH> reference or an C<ARRAY> reference of key/value pairs.
 
 =head1 EXPORTS
 
-=over 2
+=head2 C<hash( \@ARRAY | \%HASH )>
 
-=item C<hash( \@ARRAY | \%HASH )>
-
-=item C<hash( LIST )>
+=head2 C<hash( LIST )>
 
 This sub-routine transforms its arguments into a C<HASH> reference.
 It does this by first inspecting C<@_> and then running in one
@@ -122,15 +122,13 @@ transformed into a C<HASH> reference by treating the list as
 key/value pairs.  If the list contains an odd number of elements,
 an exception is thrown.
 
-=back
-
 =head1 AUTHOR
 
 jason hord E<lt>pravus@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2012, jason hord
+Copyright (c) 2012-2014, jason hord
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
